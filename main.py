@@ -12,18 +12,19 @@ def get_handles():
                       "Chrome/87.0.4280.88 Mobile Safari/537.36 Edg/87.0.664.66",
         "cookie": "sessionid=45492406159%3AGiQwcmz1arJ8Bt%3A24"
     }
-    data = pd.read_csv('C:\\Users\\sligh\\PycharmProjects\\test\\test-sheet.csv', usecols=['handle'], skip_blank_lines=True)
+    data = pd.read_csv('C:\\Users\\sligh\\PycharmProjects\\test\\test-sheet.csv',
+                       usecols=['handle'], skip_blank_lines=True)
     dataframe = pd.DataFrame(data=data)
+
     for row in dataframe.itertuples(index=False, name=None):
         handle = str(row)
+        translation_table = dict.fromkeys(map(ord, '(\'),'), None)
+        handle = handle.translate(translation_table)
         handle_url = str('https://instagram.com/' + handle + '/')
         print(handle_url)
-
-        # print(handle_url)
-        # print(handle_url)
-        # user = Profile(handle_url).scrape(headers=headers)
-        # print(user.id)
-
+        resp = requests.get(handle_url, headers=headers)
+        user = Profile(resp.text).scrape()
+        print(user.id)
         time.sleep(1)
 
 
