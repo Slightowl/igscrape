@@ -44,7 +44,6 @@ if __name__ == "__main__":
     )
     socks.setdefaultproxy(proxy_type=socks.PROXY_TYPE_SOCKS5, addr="127.0.0.1", port=SOCKS_PORT)
     socket.socket = socks.socksocket
-    print(socket.socket)
     print("tor takeoff 🚀➡️🌑")
     get_handles()
     tor_process.kill()
